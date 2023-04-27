@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeftIcon, ArrowRightIcon, BeakerIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 
 const Carousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);

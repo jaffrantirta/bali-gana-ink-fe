@@ -6,7 +6,7 @@ export default function Gallery(props) {
             {props.images.map((item, index) => {
                 return (
                     <div className='overflow-hidden' key={index}>
-                        <img class='object-cover object-center hover:scale-125 duration-500 transition-all w-full h-full' src={item} />
+                        <img alt='' class='object-cover object-center hover:scale-125 duration-500 transition-all w-full h-full' src={item} />
                     </div>
                 )
             })}
