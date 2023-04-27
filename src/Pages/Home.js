@@ -3,6 +3,7 @@ import Hero from '../Sections/Hero'
 import Carousel from '../Sections/Carousel'
 import Explain from '../Sections/Explain'
 import Gallery from '../Sections/Gallery'
+import Feature from '../Sections/Feature'
 
 export default function Home() {
     return (
@@ -21,6 +22,7 @@ export default function Home() {
                 bg='https://static01.nyt.com/images/2017/02/03/arts/03TATTOOJP3/03TATTOOJP3-articleInline.jpg?quality=75&auto=webp&disable=upscale'
             />
             <Gallery />
+            <Feature />
         </div>
     )
 }
