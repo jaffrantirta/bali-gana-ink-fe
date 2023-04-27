@@ -7,6 +7,7 @@ import Feature from '../Sections/Feature'
 import Latest from '../Sections/Latest'
 import Map from '../Sections/Map'
 import Footer from '../Sections/Footer'
+import Navbar from '../Sections/Navbar'
 
 export default function Home() {
     const images = [
@@ -17,6 +18,7 @@ export default function Home() {
     ]
     return (
         <div>
+            <Navbar />
             <Hero />
             <Carousel />
             <Explain
