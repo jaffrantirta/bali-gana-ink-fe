@@ -6,6 +6,7 @@ import Gallery from '../Sections/Gallery'
 import Feature from '../Sections/Feature'
 import Latest from '../Sections/Latest'
 import Map from '../Sections/Map'
+import Footer from '../Sections/Footer'
 
 export default function Home() {
     const images = [
@@ -33,6 +34,7 @@ export default function Home() {
             <Feature />
             <Latest />
             <Map />
+            <Footer />
         </div>
     )
 }
