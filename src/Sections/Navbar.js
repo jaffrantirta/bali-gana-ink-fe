@@ -49,7 +49,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
         },
         {
             title: 'Contact',
-            url: '/contact',
+            url: '/contact-us',
         },
     ]
 
