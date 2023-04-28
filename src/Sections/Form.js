@@ -36,7 +36,7 @@ export default function Form() {
                 </div>
             </div>
             <div className='flex flex-col gap-5 justify-center items-center p-10'>
-                <ButtonRounded className={'bg-green-600 hover:bg-green-400 w-fit flex justify-center items-center gap-5'}><img src={LogoWA} className='w-10 filter invert' /> Chat on WhatsApp</ButtonRounded>
+                <ButtonRounded className={'bg-green-600 hover:bg-green-400 w-fit flex justify-center items-center gap-5'}><img alt='' src={LogoWA} className='w-10 filter invert' /> Chat on WhatsApp</ButtonRounded>
                 <ButtonRounded className={'bg-slate-600 hover:bg-slate-400 w-fit flex justify-center items-center gap-5'}><PhoneIcon className='w-10' /> Call Phone</ButtonRounded>
             </div>
         </div >
