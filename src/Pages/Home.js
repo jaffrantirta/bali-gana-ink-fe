@@ -25,7 +25,6 @@ export default function Home() {
             let queries = {};
             queries['populate'] = '*';
             axios.get(Route('/api/descriptions', queries)).then(response => {
-                console.log(response.data.data)
                 setDescriptions(response.data.data)
             }).catch(error => {
                 console.error(error);
