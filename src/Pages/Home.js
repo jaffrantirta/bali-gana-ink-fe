@@ -19,7 +19,7 @@ export default function Home() {
     return (
         <div>
             <Navbar />
-            <Hero />
+            <Hero isLogo={true} />
             <Carousel />
             <Explain
                 title='Ad aute laborum veniam laboris tempor cillum esse ipsum veniam quis adipisicing do laboris.'

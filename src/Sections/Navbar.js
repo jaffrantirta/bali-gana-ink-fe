@@ -40,20 +40,16 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
 
     const menus = [
         {
-            title: 'Beranda',
+            title: 'Home',
             url: '/',
         },
         {
-            title: 'Paket',
-            url: '/class/with-mentor',
-        },
-        {
-            title: 'Galeri',
+            title: 'Galleries',
             url: '/galleries',
         },
         {
-            title: 'Kontak',
-            url: '/',
+            title: 'Contact',
+            url: '/contact',
         },
     ]
 
@@ -65,11 +61,11 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                 className="w-16 md:w-24 h-auto"
             />
             <div className="hidden md:flex items-center gap-5">
-                <div className="grid grid-cols-4 gap-1 text-center text-lg">
-                    {menus.map((item, index) => <Link key={index} to={item.url}>{item.title}</Link>)}
+                <div className="grid grid-cols-4 gap-5 font-bold text-center text-lg">
+                    {menus.map((item, index) => <Link className='hover:text-slate-400 duration-300 transition-all' key={index} to={item.url}>{item.title}</Link>)}
                 </div>
                 <div>
-                    <ButtonRounded text={`Daftar sekarang!`} />
+                    <ButtonRounded>Daftar sekarang!</ButtonRounded>
                 </div>
             </div>
             <div className={`transition-all md:hidden p-3 rounded-xl hover:border-primary hover:border-2 ${isOpen ? '' : 'bg-transparent'}`}>
@@ -97,7 +93,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                         {menus.map((item, index) => <Link key={index} to={item.url}>{item.title}</Link>)}
                     </div>
                     <div className='pt-5 justify-center flex'>
-                        <ButtonRounded text={`Daftar sekarang!`} />
+                        <ButtonRounded>Daftar sekarang!</ButtonRounded>
                     </div>
                 </div>
             </div>
