@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import axios from 'axios';
 
 const Carousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState('');
-  const captions = [
-    'Caption 1',
-    'Caption 2',
-    'Caption 3',
-  ];
+  const [captions, setCaptions] = useState([])
 
   const handleNext = () => {
     setActiveIndex((activeIndex + 1) % captions.length);
@@ -34,6 +31,16 @@ const Carousel = () => {
         setDirection('');
       }, 500);
     }, 3000);
+
+    function getCaption() {
+      axios.get('/api/captions').then(response => {
+        setCaptions(response.data.data);
+      }).catch(error => {
+        console.error(error);
+      })
+    }
+
+    getCaption();
     return () => {
       clearInterval(timer)
     };
@@ -48,7 +55,7 @@ const Carousel = () => {
       <div className='absolute inset-0 flex flex-col justify-center items-center'>
         <div className='mt-4 flex justify-between w-full p-10'>
           <button onClick={handlePrev} className='text-white'><ArrowLeftIcon className='w-10 shadow-lg hover:scale-125 duration-500 transition-all' /></button>
-          <h1 className={`text-xl md:text-6xl text-center text-white font-bold transition-transform duration-500 ${direction === 'left' ? '-translate-x-full' : direction === 'right' ? 'translate-x-full' : ''}`}>{captions[activeIndex]}</h1>
+          <h1 className={`text-xl md:text-6xl text-center text-white font-bold transition-transform duration-500 ${direction === 'left' ? '-translate-x-10' : direction === 'right' ? 'translate-x-10' : ''}`}>{captions[activeIndex]?.attributes.text}</h1>
           <button onClick={handleNext} className='text-white'><ArrowRightIcon className='w-10 shadow-lg hover:scale-125 duration-500 transition-all' /></button>
         </div>
       </div>
