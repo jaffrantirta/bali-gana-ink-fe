@@ -4,7 +4,7 @@ import { LogoFB, LogoIG } from '../Assets'
 
 export default function Footer() {
     return (
-        <div className='grid grid-cols-1 md:grid-cols-4 p-10 gap-5 bg-black text-slate-200'>
+        <div className='font-fredoka grid grid-cols-1 md:grid-cols-4 p-10 gap-5 bg-black text-slate-200'>
             <div className='flex justify-center'>
                 <img alt='' className='w-1/2' src='https://revolver.qodeinteractive.com/wp-content/uploads/2017/02/h5-slider-graphic.png' />
             </div>

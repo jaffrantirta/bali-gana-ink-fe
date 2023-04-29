@@ -47,7 +47,7 @@ const Carousel = () => {
   }, [activeIndex, captions.length]);
 
   return (
-    <div className='relative h-96'>
+    <div className='relative h-96 font-fredoka'>
       <div className='absolute inset-0'>
         <img src={`https://static.wixstatic.com/media/86f3ff_ddbb69f8c3ae47e197abe3206528b850~mv2.jpg/v1/fill/w_1200,h_722,al_c,q_85,enc_auto/86f3ff_ddbb69f8c3ae47e197abe3206528b850~mv2.jpg`} className='object-cover w-full h-full' alt='' />
         <div className='absolute inset-0 bg-amber-700 opacity-60'></div>

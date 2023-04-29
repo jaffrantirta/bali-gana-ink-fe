@@ -6,7 +6,7 @@ import { LogoWA } from '../Assets'
 
 export default function Form() {
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 p-10'>
+        <div className='font-fredoka grid grid-cols-1 md:grid-cols-2 p-10'>
             <div className='grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-xl p-10 border-2'>
                 <div className='flex flex-col gap-5'>
                     <h1 className='font-bold text-2xl'>FIND US!</h1>

@@ -42,7 +42,7 @@ export default function Hero(props) {
     }, [currentPath]);
 
     return (
-        <div id='hero-section' className='bg-black h-screen relative'>
+        <div id='hero-section' className='bg-black font-fredoka h-screen relative'>
             <div className='absolute inset-0 opacity-50 parallax-background bg-no-repeat bg-center bg-cover' style={{ backgroundImage: `url("${image}")` }}></div>
             <div className='relative h-full flex items-center justify-center p-10'>
                 <div className='w-96 z-10 relative'>

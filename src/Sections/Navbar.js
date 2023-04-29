@@ -54,7 +54,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
     ]
 
     return (
-        <nav className={`${hasPassedHero ? "bg-white text-slate-700" : "bg-transparent text-white"} ${scrollDirection === "down" ? "-top-32" : "top-0"} transition-all duration-500 z-30 fixed inset-0 bg-transparent p-5 px-10 ${isOpen ? 'bg-white' : 'bg-transparent'} font-primary flex h-24 justify-between items-center ${className}`}>
+        <nav className={`${hasPassedHero ? "bg-white font-fredoka text-slate-700" : "bg-transparent text-white"} ${scrollDirection === "down" ? "-top-32" : "top-0"} transition-all duration-500 z-30 fixed inset-0 bg-transparent p-5 px-10 ${isOpen ? 'bg-white' : 'bg-transparent'} font-primary flex h-24 justify-between items-center ${className}`}>
             <img
                 alt="logo"
                 src={LogoFB}

@@ -11,14 +11,10 @@ import Navbar from '../Sections/Navbar'
 import axios from 'axios'
 import Route from '../Utils/Route'
 import { API_BASE_URL } from '../Utils/Constant'
+import { showBycategory } from '../Context/GalleryContext'
 
 export default function Home() {
-    const images = [
-        'https://mymodernmet.com/wp/wp-content/uploads/2022/09/barry-flowers-floral-tattoo-art-9.jpg',
-        'https://mymodernmet.com/wp/wp-content/uploads/2022/09/barry-flowers-floral-tattoo-art-3.jpg',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj9-2-t6e_zKnjTYXHiPQlV-yRmAYTtaJYfGoDSmnaYUyDbKHRze4_h_SSuGpWhmI4lEc&usqp=CAU',
-        'https://d1kq2dqeox7x40.cloudfront.net/images/news_uploads/legacy/0/121804.jpg?h=308&w=308',
-    ]
+    const [images, setImages] = useState([])
     const [descriptions, setDescriptions] = useState([])
     useEffect(() => {
         function getDescription() {
@@ -30,6 +26,11 @@ export default function Home() {
                 console.error(error);
             })
         }
+        async function getGallery() {
+            const { data } = await showBycategory(2)
+            setImages(data)
+        }
+        getGallery();
         getDescription();
 
     }, [])
