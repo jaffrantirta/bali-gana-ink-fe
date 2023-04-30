@@ -17,6 +17,7 @@ export default function Home() {
     const [images, setImages] = useState([])
     const [descriptions, setDescriptions] = useState([])
     useEffect(() => {
+        window.scrollTo(0, 0);
         function getDescription() {
             let queries = {};
             queries['populate'] = '*';

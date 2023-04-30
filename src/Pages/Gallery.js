@@ -11,6 +11,7 @@ export default function Gallery() {
             const { data } = await find()
             setCategories(data)
         }
+        window.scrollTo(0, 0);
         getCategory()
     }, [])
 

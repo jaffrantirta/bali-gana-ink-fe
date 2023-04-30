@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import axios from 'axios';
+import { find } from '../Context/Contact';
+import { API_BASE_URL } from '../Utils/Constant';
 
 const Carousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState('');
   const [captions, setCaptions] = useState([])
+  const [captBackground, setCaptBackground] = useState(null)
 
   const handleNext = () => {
     setActiveIndex((activeIndex + 1) % captions.length);
@@ -40,6 +43,12 @@ const Carousel = () => {
       })
     }
 
+    async function getCaptBackground() {
+      const { data } = await find('caption-backgrounds', { populate: '*' })
+      setCaptBackground(API_BASE_URL + data[0]?.attributes.image.data.attributes.url)
+    }
+    getCaptBackground()
+
     getCaption();
     return () => {
       clearInterval(timer)
@@ -49,7 +58,7 @@ const Carousel = () => {
   return (
     <div className='relative h-96 font-fredoka'>
       <div className='absolute inset-0'>
-        <img src={`https://static.wixstatic.com/media/86f3ff_ddbb69f8c3ae47e197abe3206528b850~mv2.jpg/v1/fill/w_1200,h_722,al_c,q_85,enc_auto/86f3ff_ddbb69f8c3ae47e197abe3206528b850~mv2.jpg`} className='object-cover w-full h-full' alt='' />
+        <img src={captBackground} className='object-cover w-full h-full' alt='' />
         <div className='absolute inset-0 bg-amber-700 opacity-60'></div>
       </div>
       <div className='absolute inset-0 flex flex-col justify-center items-center'>
