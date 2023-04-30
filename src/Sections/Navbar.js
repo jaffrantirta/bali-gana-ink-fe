@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ButtonRounded from '../Components/ButtonRounded';
-import { LogoFB } from '../Assets';
 import { find } from '../Context/Contact';
 
 export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }) {
@@ -9,6 +8,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
     const [scrollDirection, setScrollDirection] = useState(null);
     const [hasPassedHero, setHasPassedHero] = useState(false);
     const [buttons, setButtons] = useState([])
+    const [appName, setAppName] = useState(null)
 
     useEffect(() => {
         let lastScrollY = window.pageYOffset;
@@ -34,6 +34,11 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
             const { data } = await find('buttons', { filters: { positions: 'navbar' }, populate: '*' })
             setButtons(data)
         }
+        async function getAppName() {
+            const { data } = await find('settings', { filters: { slug: 'app-name' } })
+            setAppName(data[0].attributes.content)
+        }
+        getAppName()
 
         getButtons()
         window.addEventListener("scroll", updateScrollDirection);
@@ -62,11 +67,12 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
 
     return (
         <nav className={`${hasPassedHero ? "bg-white font-fredoka text-slate-700" : "bg-transparent text-white"} ${scrollDirection === "down" ? "-top-32" : "top-0"} transition-all duration-500 z-30 fixed inset-0 bg-transparent p-5 px-10 ${isOpen ? 'bg-white' : 'bg-transparent'} font-primary flex h-24 justify-between items-center ${className}`}>
-            <img
+            {/* <img
                 alt="logo"
                 src={LogoFB}
                 className="w-16 md:w-24 h-auto"
-            />
+            /> */}
+            <h1 className='md:text-4xl font-bold uppercase'>{appName}</h1>
             <div className="hidden md:flex items-center gap-5">
                 <div className="grid grid-cols-4 gap-5 font-bold text-center text-lg">
                     {menus.map((item, index) => <Link className='hover:text-slate-400 duration-300 transition-all' key={index} to={item.url}>{item.title}</Link>)}

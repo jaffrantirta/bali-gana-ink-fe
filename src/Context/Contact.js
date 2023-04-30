@@ -5,6 +5,8 @@ const ContactContext = createContext({});
 
 export const find = (collection, params = {}) => strapi.find(collection, params);
 
+export const findOne = (collection, params = {}) => strapi.findOne(collection, params);
+
 export const findByCategory = (categoryId) => strapi.find('contacts', {
     filters: {
         contact_category: categoryId
@@ -14,7 +16,7 @@ export const findByCategory = (categoryId) => strapi.find('contacts', {
 
 const ContactProvider = ({ children }) => {
     return (
-        <ContactContext.Provider value={{ find, findByCategory }}>
+        <ContactContext.Provider value={{ find, findByCategory, findOne }}>
             {children}
         </ContactContext.Provider>
     );
