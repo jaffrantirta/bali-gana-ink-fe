@@ -7,7 +7,7 @@ export const find = (collection, params = {}) => strapi.find(collection, params)
 
 export const findByCategory = (categoryId) => strapi.find('contacts', {
     filters: {
-        contact_catgeory: categoryId
+        contact_category: categoryId
     },
     populate: '*'
 });

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { strapi } from "../Auth/Strapi";
 
 const GalleryContext = createContext({});
