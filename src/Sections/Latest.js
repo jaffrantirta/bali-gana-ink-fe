@@ -17,7 +17,7 @@ export default function Latest({ categoryId = 1 }) {
         }
         getGallery();
         getCategory();
-    }, [])
+    }, [categoryId])
 
     return (
         <div className='bg-black font-fredoka h-fit relative'>

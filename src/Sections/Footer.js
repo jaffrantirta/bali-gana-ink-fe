@@ -34,7 +34,6 @@ export default function Footer() {
                 <img alt='' className='w-1/2' src='https://revolver.qodeinteractive.com/wp-content/uploads/2017/02/h5-slider-graphic.png' />
             </div>
             {contacts.map((contact, index) => {
-                console.log(contact.contacts[0].attributes.icon.data.attributes.url);
                 return (
                     <div key={index} className='flex flex-col gap-5'>
                         <h1 className='font-bold text-2xl'>{contact.attributes.name}</h1>

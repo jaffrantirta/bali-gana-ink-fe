@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ButtonRounded from '../Components/ButtonRounded';
 import { LogoFB } from '../Assets';
+import { find } from '../Context/Contact';
 
 export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }) {
     const [isOpen, setIsOpen] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);
     const [hasPassedHero, setHasPassedHero] = useState(false);
+    const [buttons, setButtons] = useState([])
 
     useEffect(() => {
         let lastScrollY = window.pageYOffset;
@@ -28,7 +30,12 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                 setHasPassedHero(false);
             }
         };
+        async function getButtons() {
+            const { data } = await find('buttons', { filters: { positions: 'navbar' }, populate: '*' })
+            setButtons(data)
+        }
 
+        getButtons()
         window.addEventListener("scroll", updateScrollDirection);
         window.addEventListener("scroll", updateHasPassedHero);
 
@@ -64,8 +71,10 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                 <div className="grid grid-cols-4 gap-5 font-bold text-center text-lg">
                     {menus.map((item, index) => <Link className='hover:text-slate-400 duration-300 transition-all' key={index} to={item.url}>{item.title}</Link>)}
                 </div>
-                <div>
-                    <ButtonRounded>Daftar sekarang!</ButtonRounded>
+                <div className='gap-5 flex'>
+                    {buttons.map((item) => {
+                        return <ButtonRounded onClick={e => window.location.href = item.attributes.link} key={item.id}>{item.attributes.name}</ButtonRounded>
+                    })}
                 </div>
             </div>
             <div className={`transition-all md:hidden p-3 rounded-xl hover:border-primary hover:border-2 ${isOpen ? '' : 'bg-transparent'}`}>
@@ -92,8 +101,10 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                     <div className='grid grid-cols-1 gap-1 text-center text-lg'>
                         {menus.map((item, index) => <Link key={index} to={item.url}>{item.title}</Link>)}
                     </div>
-                    <div className='pt-5 justify-center flex'>
-                        <ButtonRounded>Daftar sekarang!</ButtonRounded>
+                    <div className='pt-5 justify-center flex flex-col gap-5'>
+                        {buttons.map((item) => {
+                            return <ButtonRounded onClick={e => window.location.href = item.attributes.link} key={item.id}>{item.attributes.name}</ButtonRounded>
+                        })}
                     </div>
                 </div>
             </div>
