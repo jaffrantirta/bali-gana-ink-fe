@@ -8,27 +8,23 @@ import Latest from '../Sections/Latest'
 import Map from '../Sections/Map'
 import Footer from '../Sections/Footer'
 import Navbar from '../Sections/Navbar'
-import axios from 'axios'
-import Route from '../Utils/Route'
-import { API_BASE_URL } from '../Utils/Constant'
-import { showBycategory } from '../Context/GalleryContext'
+import { show, storage } from '../Context/SupabaseContext'
 
 export default function Home() {
     const [images, setImages] = useState([])
     const [descriptions, setDescriptions] = useState([])
+    const folder_name = 'the_best'
     useEffect(() => {
         window.scrollTo(0, 0);
-        function getDescription() {
-            let queries = {};
-            queries['populate'] = '*';
-            axios.get(Route('/api/descriptions', queries)).then(response => {
-                setDescriptions(response.data.data)
-            }).catch(error => {
-                console.error(error);
-            })
+        async function getDescription() {
+            const { data: Description, error } = await show('Description').select('*')
+            if (error) return
+            setDescriptions(Description)
+
         }
         async function getGallery() {
-            const { data } = await showBycategory(2)
+            const { data } = await storage('assets').list(folder_name)
+            // console.log(data);
             setImages(data)
         }
         getGallery();
@@ -46,13 +42,13 @@ export default function Home() {
                     <Explain
                         key={index}
                         isFlip={index % 2 === 0 ? false : true}
-                        title={description.attributes.title}
-                        paragraph={description.attributes.text}
-                        bg={API_BASE_URL + description.attributes.image.data.attributes.url}
+                        title={description.title}
+                        paragraph={description.text}
+                        bg={description.image}
                     />
                 )
             })}
-            <Gallery images={images} />
+            <Gallery images={images} url={'assets/' + folder_name + '/'} />
             <Feature />
             <Latest />
             <Map />

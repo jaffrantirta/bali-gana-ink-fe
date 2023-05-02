@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ButtonRounded from '../Components/ButtonRounded';
-import { find } from '../Context/Contact';
+import { show } from '../Context/SupabaseContext';
 
 export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +31,12 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
             }
         };
         async function getButtons() {
-            const { data } = await find('buttons', { filters: { positions: 'navbar' }, populate: '*' })
+            const { data } = await show('Button').select('*').eq('position', 'navbar')
             setButtons(data)
         }
         async function getAppName() {
-            const { data } = await find('settings', { filters: { slug: 'app-name' } })
-            setAppName(data[0].attributes.content)
+            const { data } = await show('Setting').select('*').eq('slug', 'app-name').single()
+            setAppName(data?.content)
         }
         getAppName()
 
@@ -79,7 +79,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                 </div>
                 <div className='gap-5 flex'>
                     {buttons.map((item) => {
-                        return <ButtonRounded onClick={e => window.location.href = item.attributes.link} key={item.id}>{item.attributes.name}</ButtonRounded>
+                        return <ButtonRounded onClick={e => window.location.href = item.link} key={item.id}>{item.name}</ButtonRounded>
                     })}
                 </div>
             </div>
@@ -109,7 +109,7 @@ export default function Navbar({ className, btnMobileWhiteColor = 'text-white' }
                     </div>
                     <div className='pt-5 justify-center flex flex-col gap-5'>
                         {buttons.map((item) => {
-                            return <ButtonRounded onClick={e => window.location.href = item.attributes.link} key={item.id}>{item.attributes.name}</ButtonRounded>
+                            return <ButtonRounded onClick={e => window.location.href = item.link} key={item.id}>{item.name}</ButtonRounded>
                         })}
                     </div>
                 </div>

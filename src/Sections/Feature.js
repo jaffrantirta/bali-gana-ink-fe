@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import FeatureItem from '../Components/FeatureItem'
-import { find } from '../Context/FeatureContext'
-import { API_BASE_URL } from '../Utils/Constant'
+import { show } from '../Context/SupabaseContext'
 
 export default function Feature() {
     const [features, setFeatures] = useState([])
     useEffect(() => {
         async function getFeatures() {
-            const { data } = await find()
+            const { data } = await show('Feature').select('*')
             setFeatures(data)
         }
         getFeatures()
@@ -21,9 +20,9 @@ export default function Feature() {
                     return (
                         <FeatureItem
                             key={index}
-                            title={feature.attributes.title}
-                            description={feature.attributes.description}
-                            icon={API_BASE_URL + feature.attributes.icon.data.attributes.url}
+                            title={feature.title}
+                            description={feature.description}
+                            icon={feature.icon}
                         />
                     )
                 })}

@@ -1,9 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import Route from '../Utils/Route';
 import { useLocation } from 'react-router-dom';
-import { API_BASE_URL } from '../Utils/Constant';
-import { find } from '../Context/Contact'
+import { show } from '../Context/SupabaseContext';
 
 export default function Hero(props) {
     const location = useLocation();
@@ -21,21 +18,16 @@ export default function Hero(props) {
                 background.style.backgroundPositionY = `${offset * 0.5}px`;
             }
         };
-        function getHero() {
-            let queries = {};
-            queries['filters[path][$eq]'] = currentPath === '/' ? '/home' : currentPath;
-            queries['populate'] = '*';
-            axios.get(Route('/api/heroes', queries)).then(response => {
-                let attributes = response.data.data[0]?.attributes;
-                setTitle(attributes.title);
-                setImage(API_BASE_URL + attributes.background.data.attributes.url);
-            }).catch(error => {
-                console.error(error);
-            })
+        async function getHero() {
+            const { data, error } = await show('Hero').select('*').eq('path', currentPath)
+            if (error) return
+            setTitle(data[0]?.title)
+            setImage(data[0]?.background)
         }
         async function getLogo() {
-            const { data } = await find('logos', { populate: '*' })
-            setLogo(API_BASE_URL + data[0]?.attributes.image.data.attributes.url)
+            const { data, error } = await show('Setting').select('*').eq('slug', 'logo').single()
+            if (error) return
+            setLogo(data?.content)
         }
 
         window.addEventListener('scroll', handleScroll);

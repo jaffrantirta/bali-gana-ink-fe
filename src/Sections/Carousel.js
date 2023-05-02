@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
-import axios from 'axios';
-import { find } from '../Context/Contact';
-import { API_BASE_URL } from '../Utils/Constant';
+import { show } from '../Context/SupabaseContext';
 
 const Carousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,17 +33,16 @@ const Carousel = () => {
       }, 500);
     }, 3000);
 
-    function getCaption() {
-      axios.get('/api/captions').then(response => {
-        setCaptions(response.data.data);
-      }).catch(error => {
-        console.error(error);
-      })
+    async function getCaption() {
+      const { data, error } = await show('Caption').select('*')
+      if (error) return
+      setCaptions(data)
     }
 
     async function getCaptBackground() {
-      const { data } = await find('caption-backgrounds', { populate: '*' })
-      setCaptBackground(API_BASE_URL + data[0]?.attributes.image.data.attributes.url)
+      const { error } = await show('Caption').select('*')
+      if (error) return
+      setCaptBackground('https://yclsfkffpzebhmyvkstf.supabase.co/storage/v1/object/public/assets/latest_artwork/5C8BFBB1-9231-469D-BEB8-79B35BF85327.jpeg')
     }
     getCaptBackground()
 
@@ -64,7 +61,7 @@ const Carousel = () => {
       <div className='absolute inset-0 flex flex-col justify-center items-center'>
         <div className='mt-4 flex justify-between w-full p-10'>
           <button onClick={handlePrev} className='text-white'><ArrowLeftIcon className='w-10 shadow-lg hover:scale-125 duration-500 transition-all' /></button>
-          <h1 className={`text-xl md:text-6xl text-center text-white font-bold transition-transform duration-500 ${direction === 'left' ? '-translate-x-10' : direction === 'right' ? 'translate-x-10' : ''}`}>{captions[activeIndex]?.attributes.text}</h1>
+          <h1 className={`text-xl md:text-6xl text-center text-white font-bold transition-transform duration-500 ${direction === 'left' ? '-translate-x-10' : direction === 'right' ? 'translate-x-10' : ''}`}>{captions[activeIndex]?.text}</h1>
           <button onClick={handleNext} className='text-white'><ArrowRightIcon className='w-10 shadow-lg hover:scale-125 duration-500 transition-all' /></button>
         </div>
       </div>
