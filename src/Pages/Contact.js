@@ -8,6 +8,7 @@ import Map from '../Sections/Map'
 export default function Contact() {
     useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = 'Contact Us'
     }, [])
 
     return (

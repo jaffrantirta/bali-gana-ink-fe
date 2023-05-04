@@ -13,9 +13,9 @@ import { show, storage } from '../Context/SupabaseContext'
 export default function Home() {
     const [images, setImages] = useState([])
     const [descriptions, setDescriptions] = useState([])
-    const folder_name = 'the_best'
     useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = 'Home'
         async function getDescription() {
             const { data: Description, error } = await show('Description').select('*')
             if (error) return
@@ -23,9 +23,21 @@ export default function Home() {
 
         }
         async function getGallery() {
-            const { data } = await storage('assets').list(folder_name)
-            // console.log(data);
-            setImages(data)
+            await show('Gallery').select('*').eq('is_home_on_top', true).then(async (response) => {
+                let v_images = [];
+                if (response.data) {
+                    await Promise.all(response.data.map(async (item) => {
+                        const { data: img } = await storage('assets').list(item.folder_name);
+                        v_images.push({
+                            id: item.id,
+                            name: item.name,
+                            folder_name: item.folder_name,
+                            images: img
+                        });
+                    }));
+                    setImages(v_images)
+                }
+            });
         }
         getGallery();
         getDescription();
@@ -48,9 +60,11 @@ export default function Home() {
                     />
                 )
             })}
-            <Gallery images={images} url={'assets/' + folder_name + '/'} />
+            {images.map((item) => {
+                return <Gallery key={item.id} images={item.images} url={`assets/${item.folder_name}/`} />
+            })}
             <Feature />
-            <Latest />
+            <Latest isHome={true} />
             <Map />
             <Footer />
         </div>

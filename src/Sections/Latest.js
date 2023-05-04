@@ -1,41 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import Gallery from './Gallery'
-import { showBycategory } from '../Context/GalleryContext'
-import { findOne } from '../Context/CategoryContext'
 import { show, storage } from '../Context/SupabaseContext'
 
-export default function Latest() {
+export default function Latest({ isHome = false }) {
     const [images, setImages] = useState([])
     useEffect(() => {
         async function getGallery() {
-            await show('Gallery').select('*').eq('show_at_home', true).then(async (response) => {
+            await show('Gallery').select('*').eq('show_at_home', isHome).then(async (response) => {
+                let v_images = [];
                 if (response.data) {
-                    console.log(response.data);
-                    response.data.map(async (item) => {
-                        const { data: img } = await storage('assets').list(item.folder_name)
-                        const uniqueData = img.reduce((acc, current) => {
-                            const x = acc.find((item) => item.id === current.id);
-                            if (!x) {
-                                return acc.concat([current]);
-                            } else {
-                                return acc;
-                            }
-                        }, []);
-                        console.log(uniqueData);
-                        // const contactsDataPromises = uniqueData.map((item) =>
-                        //     findByCategory(item.id).then(({ data: contactsData }) => ({
-                        //         ...item,
-                        //         contacts: contactsData,
-                        //     }))
-                        // );
-                        // const contactsData = await Promise.all(contactsDataPromises);
-                    })
-
+                    await Promise.all(response.data.map(async (item) => {
+                        const { data: img } = await storage('assets').list(item.folder_name);
+                        v_images.push({
+                            id: item.id,
+                            name: item.name,
+                            folder_name: item.folder_name,
+                            images: img
+                        });
+                    }));
+                    setImages(v_images)
                 }
-            })
+            });
         }
         getGallery();
-    }, [])
+    }, [isHome]);
+
 
     return (
         <div className='bg-black font-fredoka h-fit relative'>
