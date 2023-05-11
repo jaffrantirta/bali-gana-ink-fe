@@ -1,5 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { show } from '../Context/SupabaseContext';
+import ButtonRounded from '../Components/ButtonRounded';
 
 export default function Map() {
-    return <iframe title='maps' className='w-full h-screen font-fredoka' src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3943.999858037114!2d115.16264441478424!3d-8.691561693755416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwNDEnMjkuNiJTIDExNcKwMDknNTMuNCJF!5e0!3m2!1sen!2sid!4v1682575322343!5m2!1sen!2sid" ></iframe>
+    const [maps, setMaps] = useState('')
+    const [buttons, setButtons] = useState([])
+    useEffect(() => {
+        async function getFeatures() {
+            const { data } = await show('Setting').select('*').eq('slug', 'google-maps-embed').single()
+            setMaps(data)
+        }
+        async function getButton() {
+            const { data } = await show('Button').select('*').eq('position', 'maps-section')
+            setButtons(data)
+        }
+        getFeatures()
+        getButton()
+    }, [])
+    return (
+        <div className='grid grid-cols-1 md:grid-cols-2'>
+            <div className='w-full' dangerouslySetInnerHTML={{ __html: maps.content }} />
+            <div className='p-5 flex flex-col justify-center items-center'>
+                {buttons.map((item, index) => <ButtonRounded onClick={e => window.location.href = item.link} key={index}>{item.name}</ButtonRounded>)}
+            </div>
+        </div>
+    );
+
 }

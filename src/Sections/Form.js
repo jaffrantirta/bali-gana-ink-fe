@@ -12,6 +12,7 @@ export default function Form() {
         }
         async function getButtons() {
             const { data } = await show('Button').select('*').eq('position', 'contact-us')
+            console.log(data);
             setButtons(data)
         }
         getButtons()

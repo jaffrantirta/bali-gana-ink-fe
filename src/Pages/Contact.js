@@ -16,6 +16,7 @@ export default function Contact() {
             <Navbar />
             <Hero text='Contact Us' />
             <Form />
+            <hr className='my-10'></hr>
             <Map />
             <Footer />
         </div>
