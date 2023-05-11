@@ -9,20 +9,24 @@ import Map from '../Sections/Map'
 import Footer from '../Sections/Footer'
 import Navbar from '../Sections/Navbar'
 import { show, storage } from '../Context/SupabaseContext'
+import Loader from '../Components/Loader'
 
 export default function Home() {
     const [images, setImages] = useState([])
     const [descriptions, setDescriptions] = useState([])
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         window.scrollTo(0, 0);
         document.title = 'Home'
         async function getDescription() {
+            setLoading(true)
             const { data: Description, error } = await show('Description').select('*')
             if (error) return
             setDescriptions(Description)
-
+            setLoading(false)
         }
         async function getGallery() {
+            setLoading(true)
             await show('Gallery').select('*').eq('is_home_on_top', true).then(async (response) => {
                 let v_images = [];
                 if (response.data) {
@@ -38,6 +42,7 @@ export default function Home() {
                     setImages(v_images)
                 }
             });
+            setLoading(false)
         }
         getGallery();
         getDescription();
@@ -49,7 +54,7 @@ export default function Home() {
             <Navbar />
             <Hero isLogo={true} />
             <Carousel />
-            {descriptions.map((description, index) => {
+            {loading ? <Loader /> : descriptions.map((description, index) => {
                 return (
                     <Explain
                         key={index}

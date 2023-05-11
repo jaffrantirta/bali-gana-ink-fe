@@ -45,7 +45,6 @@ const Carousel = () => {
       setCaptBackground('https://yclsfkffpzebhmyvkstf.supabase.co/storage/v1/object/public/assets/latest_artwork/5C8BFBB1-9231-469D-BEB8-79B35BF85327.jpeg')
     }
     getCaptBackground()
-
     getCaption();
     return () => {
       clearInterval(timer)
